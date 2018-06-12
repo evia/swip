@@ -30,7 +30,7 @@ class App extends Component {
                 <BrowserRouter>
                     <div>
                         <Header/>
-                        <Route path="/" exact={true} component={Login}/>
+                        <Route path="/login" exact={true} component={Login}/>
                         {/*<Route path="/landing"  exact={true} component={(props) => <Landing {...props} appConfig={this.state.appConfig} /> } />*/}
                         <Route path="/landing"  exact={true} component={(props) => <LandingDynamic {...props} appConfig={this.state.appConfig} /> } />
                     </div>

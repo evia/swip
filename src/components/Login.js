@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { withRouter } from 'react-router-dom';
 import "./Login.css";
 
 export default class Login extends Component {
@@ -27,6 +28,17 @@ export default class Login extends Component {
     }
 
     render() {
+        const CustomButton = withRouter(({ history }) => (
+            <Button
+                block
+                bsSize="large"
+                disabled={!this.validateForm()}
+                type="submit"
+                onClick={() => { history.push('/landing') }}
+            >
+                Login
+            </Button>
+        ));
         return (
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
@@ -47,14 +59,15 @@ export default class Login extends Component {
                             type="password"
                         />
                     </FormGroup>
-                    <Button
-                        block
-                        bsSize="large"
-                        disabled={!this.validateForm()}
-                        type="submit"
-                    >
-                        Login
-                    </Button>
+                    {/*<Button*/}
+                        {/*block*/}
+                        {/*bsSize="large"*/}
+                        {/*disabled={!this.validateForm()}*/}
+                        {/*type="submit"*/}
+                    {/*>*/}
+                        {/*Login*/}
+                    {/*</Button>*/}
+                    <CustomButton />
                 </form>
             </div>
         );
