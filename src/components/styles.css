@@ -5,3 +5,8 @@
 .react-grid-item {
     background: #e5c5c5;
 }
+
+.addItemButton{
+    margin-bottom: 10px;
+    background: #aac9eb;
+}

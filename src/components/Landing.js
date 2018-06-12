@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-import emptyComponent from "./emptyComponent";
 import component1 from "./component1";
 import component2 from "./component2";
 import component3 from "./component3";
@@ -17,7 +16,7 @@ class Landing extends Component {
         super(props);
 
         this.state = {
-            componentsList: [
+            widgetList: [
                 {id: 1, name: "component1", component: component1},
                 {id: 2, name: "component2", component: component2},
                 {id: 3, name: "component3", component: component3}
@@ -29,20 +28,18 @@ class Landing extends Component {
 
     onDragStop(i, x, y, _ref3) {
         console.log(" On f=drag stop");
-        this.state.layout = i;
+        this.state.config = i;
     }
 
 
     render() {
 
-        console.log(this.props.appConfig);
-        console.log(this.state.config);
         return (
             <div>
                 <div>
                     <ul>
                         {
-                            this.state.componentsList.map((option, index) => {
+                            this.state.widgetList.map((option, index) => {
                                 return (
                                     <Draggable key={index} type="id" data={option.id}>
                                         <li>{option.name}</li>
@@ -54,9 +51,9 @@ class Landing extends Component {
 
                 </div>
                 <GridLayout onDragStop={(i, x, y, _ref3) => this.onDragStop(i, x, y, _ref3)} className="layout" layout={this.state.config} cols={12} rowHeight={30} width={1400} height={1500}>
-                    <div key="Widget A"><DroppableHocPanel componentsList={this.state.componentsList}></DroppableHocPanel></div>
-                    <div key="Widget B"><DroppableHocPanel componentsList={this.state.componentsList}></DroppableHocPanel></div>
-                    <div key="Widget C"><DroppableHocPanel componentsList={this.state.componentsList}></DroppableHocPanel></div>
+                    <div key="Widget A"><DroppableHocPanel componentsList={this.state.widgetList}></DroppableHocPanel></div>
+                    <div key="Widget B"><DroppableHocPanel componentsList={this.state.widgetList}></DroppableHocPanel></div>
+                    <div key="Widget C"><DroppableHocPanel componentsList={this.state.widgetList}></DroppableHocPanel></div>
                 </GridLayout>
             </div>
         )
