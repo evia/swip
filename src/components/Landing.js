@@ -9,6 +9,8 @@ import DroppableHocPanel from "./droppableHocPanel";
 import { Draggable } from 'react-drag-and-drop';
 import GridLayout from 'react-grid-layout';
 
+import './styles.css';
+
 class Landing extends Component {
 
     constructor(props){
@@ -20,28 +22,23 @@ class Landing extends Component {
                 {id: 2, name: "component2", component: component2},
                 {id: 3, name: "component3", component: component3}
             ],
-            containersList:[{id:1 ,component:emptyComponent}]
+            config: this.props.appConfig
+
         };
     }
 
     onDragStop(i, x, y, _ref3) {
         console.log(" On f=drag stop");
+        this.state.layout = i;
     }
 
 
     render() {
-        // layout is an array of objects, see the demo for more complete usage
-        var layout = [
 
-            // {i: 'a', x: 0, y: 0, w: 1, h: 2, static: true},
-            {i: 'Widget A', x: 0, y: 0, w: 2, h: 4},
-            {i: 'Widget B', x: 0, y: 0, w: 4, h: 4},
-            {i: 'Widget C', x: 8, y: 0, w: 2, h: 4}
-        ];
-
+        console.log(this.props.appConfig);
+        console.log(this.state.config);
         return (
             <div>
-                layout:
                 <div>
                     <ul>
                         {
@@ -56,10 +53,10 @@ class Landing extends Component {
                     </ul>
 
                 </div>
-                <GridLayout onDragStop={(i, x, y, _ref3) => this.onDragStop(i, x, y, _ref3)} className="layout" layout={layout} cols={12} rowHeight={30} width={1400} height={1500}>
+                <GridLayout onDragStop={(i, x, y, _ref3) => this.onDragStop(i, x, y, _ref3)} className="layout" layout={this.state.config} cols={12} rowHeight={30} width={1400} height={1500}>
                     <div key="Widget A"><DroppableHocPanel componentsList={this.state.componentsList}></DroppableHocPanel></div>
                     <div key="Widget B"><DroppableHocPanel componentsList={this.state.componentsList}></DroppableHocPanel></div>
-                    <div key="Widget C">Widget C</div>
+                    <div key="Widget C"><DroppableHocPanel componentsList={this.state.componentsList}></DroppableHocPanel></div>
                 </GridLayout>
             </div>
         )

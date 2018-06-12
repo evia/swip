@@ -12,6 +12,19 @@ import '/Users/elevy1/Desktop/Projects/swip/node_modules/react-resizable/css/sty
 
 class App extends Component {
 
+    constructor(props){
+
+        super(props);
+
+        this.state = {
+            appConfig: [
+                {i: 'Widget A', x: 0, y: 0, w: 2, h: 4},
+                {i: 'Widget B', x: 0, y: 0, w: 4, h: 4},
+                {i: 'Widget C', x: 4, y: 0, w: 2, h: 4}
+            ]
+        }
+    }
+
     render() {
         return (
             <div className="container">
@@ -19,8 +32,7 @@ class App extends Component {
                     <div>
                         <Header/>
                         <Route path="/" exact={true} component={Login}/>
-                        <Route path="/landing" exact={true} component={Landing} />
-                        <Route path="/dnd" exact={true} component={DndComponent} />
+                        <Route path="/landing"  exact={true} component={(props) => <Landing {...props} appConfig={this.state.appConfig} /> } />
                     </div>
                 </BrowserRouter>
             </div>
