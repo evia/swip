@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import emptyComponent from "./emptyComponent";
 import {Droppable } from 'react-drag-and-drop'
 import configStyles from "./config-styles";
-// import config from '../config';
+import widgetList from '../config';
 
 const higherOrderComponent = (WrappedComponent) => {
     class HOC extends React.Component {
@@ -20,31 +20,32 @@ class DroppableHocPanel extends Component {
 
     constructor(props){
         super(props);
-
         this.state={
-            location:{},
-            size:{},
-            componentName:"emptyComponent"
+            widgetName:this.props.widgetName
         };
+
+        this.onDrop = this.onDrop.bind(this);
     }
 
     onDrop(data) {
-        var selectedComponent = this.props.componentsList.filter(
-            (e) => e.id == data.id);
-
-        console.log(selectedComponent[0]);
-        DropHOC = higherOrderComponent(selectedComponent[0].component);
-
-        this.setState({ componentName:selectedComponent[0].name});
+        const self= this;
+        import(data.id +".js")
+            .then(function (component) {
+                self.setState({ widgetName:component.default});
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     render() {
+        const WidgetClass = this.state.widgetName;
         return (
             <div style={configStyles.resizableDiv}>
                 <Droppable style={configStyles.containerPanel}
-                           types={['id']} // <= allowed drop types
+                           types={['id']}
                            onDrop={(e) => this.onDrop(e)}>
-                    <DropHOC></DropHOC>
+                    <WidgetClass></WidgetClass>
                 </Droppable>
             </div>
         );

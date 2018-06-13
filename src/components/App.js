@@ -5,9 +5,14 @@ import Login from "./Login";
 import Landing from "./Landing";
 import LandingDynamic from "./LandingDynamic";
 
+import component1 from "./component1";
+import component2 from "./component2";
+import component3 from "./component3";
+
+
 import {BrowserRouter, Route} from 'react-router-dom';
-import '/Users/elevy1/Desktop/Projects/swip/node_modules/react-grid-layout/css/styles.css';
-import '/Users/elevy1/Desktop/Projects/swip/node_modules/react-resizable/css/styles.css';
+import '/Users/elevy1/Desktop/Projects/swipgit/node_modules/react-grid-layout/css/styles.css';
+import '/Users/elevy1/Desktop/Projects/swipgit/node_modules/react-resizable/css/styles.css';
 
 class App extends Component {
 
@@ -17,9 +22,10 @@ class App extends Component {
 
         this.state = {
             appConfig: [
-                {i: 'Widget A', x: 0, y: 0, w: 2, h: 4, widget: "component1"},
-                {i: 'Widget B', x: 0, y: 0, w: 4, h: 4, widget: "component2"},
-                {i: 'Widget C', x: 4, y: 0, w: 2, h: 4, widget: "component3"}
+                {i: 'WidgetA', x: 0, y: 0, w: 4, h: 1, widget: component1},
+                {i: 'WidgetC', x: 4, y: 0, w: 4, h: 1, widget: component2},
+                {i: 'WidgetB', x: 0, y: 0, w: 4, h: 1, widget: component3}
+
             ]
         }
     }

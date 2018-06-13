@@ -2,15 +2,13 @@ import React from "react";
 import {WidthProvider, Responsive} from "react-grid-layout";
 import _ from "lodash";
 
-import component1 from "./component1";
-import component2 from "./component2";
-import component3 from "./component3";
-
-
+import widgetList from "../config.js";
 import DroppableHocPanel from './droppableHocPanel';
 import {Draggable} from 'react-drag-and-drop';
 
 import './styles.css';
+import emptyComponent from "./emptyComponent";
+
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -19,84 +17,36 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
  */
 class LandingDynamic extends React.PureComponent {
 
-    static defaultProps = {
-        className: "layout",
-        cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
-        rowHeight: 100
-    };
-
     constructor(props) {
         super(props);
 
         this.state = {
-            // items: [0, 1, 2, 3, 4].map(function (i, key, list) {
-            //     return {
-            //         i: i.toString(),
-            //         x: i * 2,
-            //         y: 0,
-            //         w: 2,
-            //         h: 2,
-            //         add: i === (list.length - 1).toString()
-            //     };
-            // }),
-            widgetList: [
-                {id: 1, name: "component1", component: component1},
-                {id: 2, name: "component2", component: component2},
-                {id: 3, name: "component3", component: component3}
-            ],
+            widgetList: widgetList,
             items: this.props.appConfig,
             newCounter: 0
         };
 
         this.onAddItem = this.onAddItem.bind(this);
-        this.onBreakpointChange = this.onBreakpointChange.bind(this);
-        this.onLayoutChange = this.onLayoutChange.bind(this);
-    }
-
-    createElement(el) {
-        const removeStyle = {
-            position: "absolute",
-            right: "2px",
-            top: 0,
-            cursor: "pointer"
-        };
-        const i = el.add ? "+" : el.i;
-        return (
-            <div key={i} data-grid={el}>
-                <span className="remove" style={removeStyle} onClick={this.onRemoveItem.bind(this, i)}>x</span>
-                <DroppableHocPanel componentsList={this.state.widgetList}></DroppableHocPanel>
-            </div>
-        );
     }
 
     onAddItem() {
-        /*eslint no-console: 0*/
-        console.log("adding", "n" + this.state.newCounter);
         this.setState({
-            // Add a new item. It must have a unique key!
-            items: this.state.items.concat({
+            items: this.state.items.concat([{
                 i: "n" + this.state.newCounter,
                 x: (this.state.items.length * 2) % (this.state.cols || 12),
-                y: Infinity, // puts it at the bottom
+                y: Infinity,
                 w: 2,
-                h: 2
-            }),
-            // Increment the counter to ensure key is always unique.
+                h: 2,
+                widget: emptyComponent
+            }]),
             newCounter: this.state.newCounter + 1
         });
     }
 
-    // We're using the cols coming back from this to calculate where to add new items.
-    onBreakpointChange(breakpoint, cols) {
-        this.setState({
-            breakpoint: breakpoint,
-            cols: cols
-        });
-    }
-
     onLayoutChange(layout) {
-        console.log("Here");
-        this.setState({items: layout});
+        const self = this;
+        debugger;
+        self.setState({items: layout});
     }
 
     onRemoveItem(i) {
@@ -105,7 +55,31 @@ class LandingDynamic extends React.PureComponent {
     }
 
     render() {
-        // debugger;
+        const getItems = () => {
+
+            return this.state.items.map((item, index) => {
+                const removeStyle = {
+                    position: "absolute",
+                    right: "2px",
+                    top: 0,
+                    cursor: "pointer"
+                };
+                console.log(1, item.widget);
+
+                return (
+
+                    <div key={index} data-grid={item}>
+                        <span className="remove" style={removeStyle}
+                              onClick={this.onRemoveItem.bind(this, index)}>x</span>
+                        <DroppableHocPanel widgetName={item.widget}></DroppableHocPanel>
+                    </div>
+                );
+            });
+
+            // return _.map(this.state.items, el => this.createElement(el))
+        }
+
+
         return (
             <div className="mainContainer">
                 <div className="offeredWidgets">
@@ -113,7 +87,7 @@ class LandingDynamic extends React.PureComponent {
                         {
                             this.state.widgetList.map((option, index) => {
                                 return (
-                                    <Draggable key={index} type="id" data={option.id}>
+                                    <Draggable key={index} type="id" data={option.path}>
                                         <li>{option.name}</li>
                                     </Draggable>
                                 )
@@ -124,9 +98,12 @@ class LandingDynamic extends React.PureComponent {
 
                 <div className="widgetsPanel">
                     <button className="addItemButton" onClick={this.onAddItem}>Add Item</button>
-                    <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange}
-                                               onBreakpointChange={this.onBreakpointChange} {...this.props}>
-                        {_.map(this.state.items, el => this.createElement(el))}
+                    <ResponsiveReactGridLayout
+                    >
+
+                        {getItems()}
+
+
                     </ResponsiveReactGridLayout>
                 </div>
             </div>
@@ -135,3 +112,4 @@ class LandingDynamic extends React.PureComponent {
 }
 
 export default LandingDynamic;
+/*onLayoutChange={(layout) => this.onLayoutChange(this.state.items)}*/

@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { withRouter } from 'react-router-dom';
+
 import "./Login.css";
+
+import { postLogin } from '../actions/loginApi';
+
 
 export default class Login extends Component {
     constructor(props) {
@@ -25,6 +29,8 @@ export default class Login extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
+        console.log("Submitted login request");
+        postLogin({"username": "evia87", "password": "evia1234"});
     }
 
     render() {
@@ -34,7 +40,7 @@ export default class Login extends Component {
                 bsSize="large"
                 disabled={!this.validateForm()}
                 type="submit"
-                onClick={() => { history.push('/landing') }}
+                // onClick={() => { history.push('/landing') }}
             >
                 Login
             </Button>
