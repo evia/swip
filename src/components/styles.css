@@ -10,3 +10,19 @@
     margin-bottom: 10px;
     background: #aac9eb;
 }
+
+.widgetsPanel {
+    width:75%;
+    float: right;
+    margin-right: 5%;
+}
+
+.offeredWidgets {
+    width: 15%;
+    float: left;
+    margin-left:5%;
+}
+
+.mainContainer {
+    margin-top: 15px;
+}

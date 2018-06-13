@@ -96,7 +96,7 @@ class LandingDynamic extends React.PureComponent {
 
     onLayoutChange(layout) {
         console.log("Here");
-        this.setState({ items: layout });
+        this.setState({items: layout});
     }
 
     onRemoveItem(i) {
@@ -107,8 +107,8 @@ class LandingDynamic extends React.PureComponent {
     render() {
         // debugger;
         return (
-            <div>
-                <div>
+            <div className="mainContainer">
+                <div className="offeredWidgets">
                     <ul>
                         {
                             this.state.widgetList.map((option, index) => {
@@ -122,11 +122,13 @@ class LandingDynamic extends React.PureComponent {
                     </ul>
                 </div>
 
-                <button className="addItemButton" onClick={this.onAddItem}>Add Item</button>
-                <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange}
-                                           onBreakpointChange={this.onBreakpointChange} {...this.props}>
-                    {_.map(this.state.items, el => this.createElement(el))}
-                </ResponsiveReactGridLayout>
+                <div className="widgetsPanel">
+                    <button className="addItemButton" onClick={this.onAddItem}>Add Item</button>
+                    <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange}
+                                               onBreakpointChange={this.onBreakpointChange} {...this.props}>
+                        {_.map(this.state.items, el => this.createElement(el))}
+                    </ResponsiveReactGridLayout>
+                </div>
             </div>
         );
     }
